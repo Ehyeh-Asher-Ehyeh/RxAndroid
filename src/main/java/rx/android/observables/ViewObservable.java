@@ -16,15 +16,17 @@ package rx.android.observables;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
-
 import rx.Observable;
 import rx.android.events.OnCheckedChangeEvent;
 import rx.android.events.OnClickEvent;
 import rx.android.events.OnItemClickEvent;
+import rx.android.events.OnSeekBarEvent;
 import rx.android.events.OnTextChangeEvent;
 import rx.android.operators.OperatorAdapterViewOnItemClick;
 import rx.android.operators.OperatorCompoundButtonInput;
+import rx.android.operators.OperatorSeekBarInput;
 import rx.android.operators.OperatorTextViewInput;
 import rx.android.operators.OperatorViewClick;
 
@@ -52,6 +54,14 @@ public class ViewObservable {
 
     public static Observable<OnCheckedChangeEvent> input(final CompoundButton button, final boolean emitInitialValue) {
         return Observable.create(new OperatorCompoundButtonInput(button, emitInitialValue));
+    }
+
+    public static Observable<OnSeekBarEvent> input(final SeekBar seekBar) {
+        return input(seekBar, false);
+    }
+
+    public static Observable<OnSeekBarEvent> input(final SeekBar seekBar, final boolean emitInitialValue) {
+        return Observable.create(new OperatorSeekBarInput(seekBar, emitInitialValue));
     }
 
     public static Observable<OnItemClickEvent> itemClicks(final AdapterView<?> adapterView) {
